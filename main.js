@@ -68,7 +68,7 @@ posts.forEach((post, i) => {
                         <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
                     </div>
                     <div class="post-meta__data">
-                        <div class="post-meta__author">Phil Mangione</div>
+                        <div class="post-meta__author">${post.author.name}</div>
                         <div class="post-meta__time">${post.created}</div>
                     </div>                    
                 </div>
@@ -80,7 +80,7 @@ posts.forEach((post, i) => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -95,6 +95,8 @@ posts.forEach((post, i) => {
 
 });
 
+const likedPosts = []
+
 const allLikeButtons = document.querySelectorAll('.js-like-button');
 console.log(allLikeButtons);
 
@@ -103,14 +105,23 @@ allLikeButtons.forEach((singleButton, i) =>{
         function (event){
             event.preventDefault()
 
-            this.classList.add('like-button--liked')
+            if(!this.classList.contains('like-button--liked')){
+
+                this.classList.add('like-button--liked')
         
             const postId = this.getAttribute('data-postid')
             const likesCounter = document.getElementById('like-counter-' + postId)
-            console.log(likesCounter)
 
             let likes = parseInt(likesCounter.innerText);
-            likes = likes + 1
+            likes = likes + 1;
+
+            likesCounter.innerHTML = likes;
+            likedPosts.push(postId)
+
+
+            }
+
+            
         }
     )
 
